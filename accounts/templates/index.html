@@ -10,7 +10,7 @@
   </head>
   <style>
     body {
-      background-image: url('https://www.eleconomista.com.mx/__export/1660703652284/sites/eleconomista/img/2022/08/16/amor_mascotas_mueve_economia_mexicana.jpg_248774802.jpg'); /* Link a la imagen */
+      background-image: url('https://media.0221.com.ar/p/af24425453109a688df3ba624cf8ae83/adjuntos/357/imagenes/100/024/0100024057/1400x0/smart/perro.jpg'); /* Link a la imagen */
       background-size: cover; /* Para que la imagen cubra toda la pantalla */
       background-position: center; /* Centra la imagen */
       background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -41,17 +41,35 @@
 
     <div class="login-box">
       <h2>Login</h2>
-      <form>
+      <form method="post" action="{% url 'inicio_sesion' %}">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
         <div class="user-box">
-          <input type="text" name="" required="" />
+          {{ form.username.errors }}
+          {{ form.username.as_widget }}
           <label>Username</label>
         </div>
         <div class="user-box">
-          <input type="password" name="" required="" />
+          {{ form.password.errors }}
+          {{ form.password.as_widget }}
           <label>Password</label>
         </div>
+        <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
       </form>
-      <a href="#" class="btn btn-dark">Go somewhere</a>
+    </div>
+
+    <div class="user-box">
+      {{ form.username.errors }}
+      <input type="text" name="{{ form.username.name }}" value="{{ form.username.value }}" required="" />
+      <label>Username</label>
+    </div>
+    <div class="user-box">
+      {{ form.password.errors }}
+      <input type="password" name="{{ form.password.name }}" value="{{ form.password.value }}" required="" />
+      <label>Password</label>
+      <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
     </div>
 
     <!-- FOOTER -->

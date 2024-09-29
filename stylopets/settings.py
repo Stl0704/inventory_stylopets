@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inventory',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'stylopets.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates",],
+        'DIRS': [os.path.join(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,6 +113,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# USUARIO PERSONALIZADO (MODELO DE NEGOCIO)
+
+AUTH_USER_MODEL = 'accounts.Usuario'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -132,6 +137,7 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'accounts', 'static'),
     os.path.join(BASE_DIR, 'inventory', 'static'),
 ]
 
