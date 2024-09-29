@@ -27,6 +27,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ('encargado_tienda', 'Encargado de Tienda'),
         ('bodeguero', 'Bodeguero'),
         ('encargado_logistica', 'Encargado de Logística'),
+        ('Prueba', 'test'),
     )
 
     email = models.EmailField(unique=True)
