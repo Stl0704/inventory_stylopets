@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="login-box">
+    <h2>Registro</h2>
+    <form method="post" action="{% url 'registro' %}">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        {{ field.errors }}
+        <div class="user-box">
+          {{ field }}
+          <label>{{ field.label }}</label>
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-dark">Registrarse</button>
+    </form>
+  </div>
+{% endblock %}

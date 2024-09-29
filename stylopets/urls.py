@@ -22,7 +22,6 @@ from accounts.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Inicio, name='inicio'),
     path('lobby', Lobby, name='lobby'),
     path('accounts/', include('accounts.urls')),
 
