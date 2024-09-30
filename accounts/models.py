@@ -24,6 +24,7 @@ class UsuarioManager(BaseUserManager):
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     ROLES = (
+        ('ADMIN', 'Administrador del sistema'),
         ('encargado_tienda', 'Encargado de Tienda'),
         ('bodeguero', 'Bodeguero'),
         ('encargado_logistica', 'Encargado de Logística'),

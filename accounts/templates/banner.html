@@ -1,0 +1,18 @@
+{% load static %}
+<!-- banner.html -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid justify-content-between">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img
+            src="https://images.jumpseller.com/store/stylopets/store/logo/logo-en-partes.png?1727208075"
+            alt="Logo Stylopets"
+            class="logo-img"
+            />
+        <span class="ms-2 title">STYLOPETS - INVENTARIO TIENDA</span>
+        </a>
+        <div class="d-flex">
+            <a href="{% url 'index' %}" class="btn btn-outline-primary me-2">Ingresar</a>
+            <a href="{% url 'registro' %}" class="btn btn-outline-success">Registrarse</a>
+        </div>
+    </div>
+</nav>
