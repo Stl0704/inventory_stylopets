@@ -1,0 +1,100 @@
+/* Estilos generales para el formulario de inicio de sesión */
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto; /* Centra el formulario */
+    padding: 40px;
+    background-color: #f8f9fa; /* Fondo claro */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .user-box, .pass-box {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para los campos de texto (username y password) */
+  .user-box input, .pass-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 2px solid #333;
+    outline: none;
+    background: transparent;
+  }
+  
+  .user-box label, .pass-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #666;
+    pointer-events: none;
+    transition: 0.3s;
+  }
+  
+  /* Efecto flotante en el label cuando el campo tiene foco o está lleno */
+  .user-box input:focus ~ label, .user-box input:not(:placeholder-shown) ~ label,
+  .pass-box input:focus ~ label, .pass-box input:not(:placeholder-shown) ~ label {
+    top: -20px;
+    left: 0;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* Botón de envío */
+  .login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .login-box button:hover {
+    background-color: #555;
+  }
+  
+  /* Estilos para el enlace de recuperar contraseña */
+  .login-box p {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  
+  .login-box a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-box a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Alertas de error */
+  .alert.alert-danger {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
