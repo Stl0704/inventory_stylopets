@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registrar Ingreso</title>
+    <link rel="stylesheet" href="{% static 'css/registrarIngreso.css' %}">
+  </head>
+  <body>
+    {% block content %}
+    <div class="container">
+
+      <!-- Dividimos la pantalla en dos columnas -->
+      <div class="main-grid">
+        <!-- Columna izquierda -->
+        <div class="left-section">
+          <h1>Registrar Ingreso de Producto</h1>
+
+          <!-- Opción de subir una imagen -->
+          <div class="upload-scan">
+            <h3>Subir Imagen de Código QR o de Barras</h3>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'procesar_codigo' %}">
+              {% csrf_token %}
+              <input type="file" name="image" accept="image/*" class="form-control mb-2">
+              <button type="submit" class="btn btn-success">Subir y Escanear</button>
+            </form>
+          </div>
+
+          <hr>
+
+          <!-- Opción de buscar manualmente por SKU o ID -->
+          <div class="manual-search">
+            <h3>Buscar mediante SKU o ID</h3>
+            <form id="search-form" method="GET" action="{% url 'buscar_producto' %}">
+              <input type="text" name="sku_id" id="sku-id" placeholder="Ingresar SKU o ID" class="form-control mb-2">
+              <button type="submit" id="buscar-producto-btn" class="btn btn-info">Buscar Producto</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="right-section">
+          <h2>Productos añadidos al ingreso:</h2>
+            <form method="POST" action="{% url 'confirmar_ingreso' %}">
+              {% csrf_token %}
+              <ul>
+                {% for producto in productos_añadidos %}
+                  <li>
+                    <p><strong>Id Producto:</strong> {{ producto.Id_Producto }}</p>
+                    <p><strong>Nombre:</strong> {{ producto.Nombre }}</p>
+                    <p><strong>Categoría:</strong> {{ producto.Categoria }}</p>
+                    <!-- Input para la cantidad de stock entrante -->
+                    <input type="number" name="cantidad_{{ forloop.counter }}" placeholder="Cantidad de Stock Entrante" value="1" class="form-control mb-2">
+                  </li>
+                {% endfor %}
+              </ul>
+              <div class="ingreso-actions">
+                <button type="submit" class="btn btn-success">Confirmar Ingreso</button>
+                <button type="button" id="cancelar-ingreso-btn" class="btn btn-danger">Cancelar</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    <script src="{% static 'js/procesamientoImg.js' %}"></script>
+    <script src="{% static 'js/ingresoProducto.js' %}"></script>
+
+
+  </body>
+</html>
+
+
+<script>
+  document.getElementById('confirmar-ingreso-btn').addEventListener('click', function() {
+    if (confirm('¿Estás seguro de que deseas confirmar el ingreso?')) {
+      // Si el usuario confirma, envía el formulario
+      document.getElementById('confirmar-ingreso-form').submit();
+    }
+  });
+
+  document.getElementById('cancelar-ingreso-btn').addEventListener('click', function() {
+    if (confirm('¿Estás seguro de que deseas cancelar el ingreso?')) {
+      window.location.href = "{% url 'cancelar_ingreso' %}";
+    }
+  });
+</script>
