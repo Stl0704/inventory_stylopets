@@ -1,0 +1,177 @@
+/* Estructura básica del diseño */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Diseño de la grid principal */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Sección de la izquierda (Cámara y subida de imagen) */
+  .left-section {
+    border-right: 1px solid #ddd;
+    padding-right: 20px;
+  }
+  
+  .camera-scan h3,
+  .upload-scan h3,
+  .manual-search h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .camera-scan video {
+    width: 100%;
+    border-radius: 6px;
+    border: 2px solid #ddd;
+  }
+  
+  .camera-scan button,
+  .upload-scan button,
+  .manual-search button {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .upload-scan input[type="file"],
+  .manual-search input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .manual-search button {
+    background-color: #17a2b8;
+    color: #fff;
+  }
+  
+  /* Sección de la derecha (Lista de productos) */
+  .right-section {
+    padding-left: 20px;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  ul#productos-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  ul#productos-list li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  ul#productos-list li p {
+    margin: 0;
+    font-size: 1rem;
+    flex: 1;
+  }
+  
+  ul#productos-list li input[type="number"] {
+    width: 80px;
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  ul#productos-list li .eliminar-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  ul#productos-list li .eliminar-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .ingreso-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .ingreso-actions button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
+  /* Estilos responsive */
+  @media (max-width: 768px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+  
+    .left-section {
+        border-right: none;
+        padding-right: 0;
+    }
+  
+    .right-section {
+        padding-left: 0;
+    }
+  
+    .ingreso-actions button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+  }
+  

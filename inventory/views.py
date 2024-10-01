@@ -127,6 +127,7 @@ def cancelar_ingreso(request):
         return JsonResponse({'success': True})  # Devuelve una respuesta JSON para confirmar la operación
     return redirect('panel')
 
+
 def confirmar_ingreso(request):
     if request.method == 'POST':
         productos_añadidos = request.session.get('productos_añadidos', [])
@@ -137,26 +138,31 @@ def confirmar_ingreso(request):
             nuevo_ingreso = IngresoTest(responsable=responsable)
             nuevo_ingreso.save()
 
-            for index, producto in enumerate(productos_añadidos, start=1):
-                producto_obj = ProductoTests.objects.get(Id_Producto=producto['Id_Producto'])
-                cantidad_key = f'cantidad_{index}'
-                cantidad = int(request.POST.get(cantidad_key, 1))
+            for producto in productos_añadidos:
+                # Obtener la cantidad desde el formulario
+                cantidad_key = f'cantidad_{producto["SKU"]}'
+                cantidad = int(request.POST.get(cantidad_key, 1))  # Si no se envía, el valor predeterminado será 1
 
+                # Actualizar el stock del producto
+                producto_obj = ProductoTests.objects.get(Id_Producto=producto['Id_Producto'])
                 producto_obj.Stock += cantidad
                 producto_obj.save()
 
+                # Crear el detalle de ingreso
                 DetalleIngresoTest.objects.create(
                     ingreso=nuevo_ingreso,
                     producto=producto_obj,
                     cantidad=cantidad
                 )
 
+            # Registrar en el historial
             HistorialIngresosTests.objects.create(
                 Id_Ingreso=nuevo_ingreso,
                 responsable=responsable,
                 fecha=nuevo_ingreso.fecha
             )
 
+            # Limpiar la lista de productos añadidos
             request.session['productos_añadidos'] = []
             return redirect('panel')
 
@@ -190,6 +196,7 @@ def eliminar_producto(request, producto_id):
     except Exception as e:
         # Enviar una respuesta en caso de error
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
 
 @csrf_exempt
 def buscar_producto(request):
