@@ -42,7 +42,7 @@
           <!-- Opción de buscar manualmente por SKU o ID -->
           <div class="manual-search">
             <h3>Buscar mediante SKU o ID</h3>
-            <form id="search-form" method="GET" action="{% url 'buscar_producto' %}">
+            <form id="search-form" method="POST" action="{% url 'buscar_producto' %}">
               <input type="text" name="sku_id" id="sku-id" placeholder="Ingresar SKU o ID" class="form-control mb-2">
               <button type="submit" id="buscar-producto-btn" class="btn btn-info">Buscar Producto</button>
             </form>
@@ -77,7 +77,6 @@
     <!-- Enlace al archivo JavaScript externo -->
     <script src="{% static 'js/ingresoProducto.js' %}"></script>
     <script src="{% static 'js/escanearCamara.js' %}"></script>
-    {% comment %} <script src="{% static 'js/procesarImg.js' %}"></script> {% endcomment %}
     
   </body>
 </html>

@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('panel/', views.Panel, name='panel'),
-    path('procesar-codigo/', views.procesar_codigo, name='procesar_codigo'),
+    path('procesar-ingreso/', views.procesar_ingreso, name='procesar_ingreso'),
     path('escanear-codigo/', views.escanear_codigo, name='escanear_codigo'),  # Nueva URL para subir imagen y escanear código
     path('buscar-producto/', views.buscar_producto, name='buscar_producto'),
     path('confirmar-ingreso/', views.confirmar_ingreso, name='confirmar_ingreso'),

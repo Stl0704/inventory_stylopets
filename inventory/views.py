@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import JsonResponse
 from pyzbar.pyzbar import decode
 from PIL import Image
@@ -49,16 +50,22 @@ def escanear_codigo(request):
                 producto = ProductoTests.objects.filter(SKU=codigo).first()
 
             if producto:
-                # Añadir el producto a la lista de productos añadidos
-                productos_añadidos.append({
-                    'Id_Producto': producto.Id_Producto,
-                    'SKU': producto.SKU,
-                    'Nombre': producto.Nombre,
-                    'Categoria': producto.Categoria,
-                    'Stock': producto.Stock
-                })
-                # Guardar la lista actualizada en la sesión
-                request.session['productos_añadidos'] = productos_añadidos
+                # Verificar si el producto ya está en la lista de productos añadidos
+                producto_ya_añadido = any(p['Id_Producto'] == producto.Id_Producto for p in productos_añadidos)
+                
+                if not producto_ya_añadido:
+                    # Añadir el producto a la lista si no está presente
+                    productos_añadidos.append({
+                        'Id_Producto': producto.Id_Producto,
+                        'SKU': producto.SKU,
+                        'Nombre': producto.Nombre,
+                        'Categoria': producto.Categoria,
+                        'Stock': producto.Stock
+                    })
+                    # Guardar la lista actualizada en la sesión
+                    request.session['productos_añadidos'] = productos_añadidos
+                else:
+                    error = 'El producto ya está en la lista de productos añadidos.'
             else:
                 error = 'No se encontró ningún producto con el código escaneado.'
         else:
@@ -68,7 +75,7 @@ def escanear_codigo(request):
 
 
 # Vista para procesar el registro de ingreso
-def procesar_codigo(request):
+def procesar_ingreso(request):
     # Lógica para registrar ingreso
     productos_añadidos = request.session.get('productos_añadidos', [])
     
@@ -184,25 +191,39 @@ def eliminar_producto(request, producto_id):
         # Enviar una respuesta en caso de error
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
+@csrf_exempt
 def buscar_producto(request):
-    query = request.GET.get('sku_id', '')
+    producto = None
+    error = None
+    
+    # Obtener la lista de productos añadidos a la sesión o inicializar una lista vacía
     productos_añadidos = request.session.get('productos_añadidos', [])
 
-    if query:
-        # Buscar el producto por SKU o ID
-        producto = ProductoTests.objects.filter(Id_Producto=query).first() or ProductoTests.objects.filter(SKU=query).first()
+    if request.method == 'POST':
+        query = request.POST.get('sku_id', '')
 
-        if producto:
-            # Agregar el producto encontrado a la lista de productos añadidos
-            productos_añadidos.append({
-                'Id_Producto': producto.Id_Producto,
-                'SKU': producto.SKU,
-                'Nombre': producto.Nombre,
-                'Categoria': producto.Categoria,
-                'Stock': producto.Stock,
-            })
+        if query:
+            # Buscar el producto por SKU o ID
+            producto = ProductoTests.objects.filter(Id_Producto=query).first() or ProductoTests.objects.filter(SKU=query).first()
 
-            # Actualizar la lista de productos añadidos en la sesión
-            request.session['productos_añadidos'] = productos_añadidos
+            if producto:
+                # Verificar si el producto ya está en la lista de productos añadidos
+                producto_ya_añadido = any(p['Id_Producto'] == producto.Id_Producto for p in productos_añadidos)
 
-    return render(request, 'registrarIngreso.html', {'productos_añadidos': productos_añadidos})
+                if not producto_ya_añadido:
+                    # Agregar el producto encontrado a la lista de productos añadidos
+                    productos_añadidos.append({
+                        'Id_Producto': producto.Id_Producto,
+                        'SKU': producto.SKU,
+                        'Nombre': producto.Nombre,
+                        'Categoria': producto.Categoria,
+                        'Stock': producto.Stock,
+                    })
+                    # Actualizar la lista de productos añadidos en la sesión
+                    request.session['productos_añadidos'] = productos_añadidos
+                else:
+                    error = 'El producto ya está en la lista de productos añadidos.'
+            else:
+                error = 'Producto no encontrado.'
+    
+    return render(request, 'registrarIngreso.html', {'productos_añadidos': productos_añadidos, 'error': error})

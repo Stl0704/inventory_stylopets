@@ -1,27 +1,54 @@
 let productos = [];
 
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/obtener-productos/')
+        .then(response => response.json())
+        .then(data => {
+            productos = data.productos;
+            actualizarListaProductos();  // Solo actualizar si hay productos
+        });
+});
+
+// Función para actualizar la lista de productos en la interfaz
+function actualizarListaProductos() {
+    const listaProductos = document.getElementById('productos-list');
+    listaProductos.innerHTML = '';  // Limpiar la lista antes de actualizarla
+
+    productos.forEach(producto => {
+        const productoHtml = `
+            <li id="producto-${producto.Id_Producto}">
+                <p><strong>Id Producto:</strong> ${producto.Id_Producto}</p>
+                <p><strong>Nombre:</strong> ${producto.Nombre}</p>
+                <p><strong>Categoría:</strong> ${producto.Categoria}</p>
+                <input type="number" name="cantidad_${producto.SKU}" value="1" min="1" class="form-control mb-2" />
+                <button type="button" class="btn btn-danger eliminar-btn" data-producto-id="${producto.Id_Producto}">Eliminar</button>
+            </li>
+        `;
+        listaProductos.insertAdjacentHTML('beforeend', productoHtml);
+    });
+}
+
+
 // Buscar producto por SKU o ID
 document.getElementById('buscar-producto-btn').addEventListener('click', () => {
     const skuId = document.getElementById('sku-id').value;
     if (skuId) {
-        fetch(`/buscar-producto?query=${skuId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.producto) {
-                    const productoHtml = `
-                        <div class="producto-entry">
-                            <span>${data.producto.Nombre} (${data.producto.SKU})</span>
-                            <input type="number" name="cantidad_${data.producto.SKU}" value="1" min="1" />
-                        </div>
-                    `;
-                    document.getElementById('productos-list').insertAdjacentHTML('beforeend', productoHtml);
-                    productos.push(data.producto);
-                } else {
-                    alert('Producto no encontrado');
-                }
-            });
+        fetch(`/inventory/buscar-producto/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')  // Obtener el token CSRF
+            },
+            body: new URLSearchParams({ 'sku_id': skuId })
+        })
+        .then(response => response.text())  // Cambiar a texto para procesar la respuesta HTML
+        .then(html => {
+            document.body.innerHTML = html;  // Reemplazar el contenido del body con la respuesta actualizada
+        })
+        .catch(error => console.error('Error al buscar el producto:', error));
     }
 });
+
 
 // Confirmar Ingreso
 document.getElementById('confirmar-ingreso-btn').addEventListener('click', () => {
@@ -37,11 +64,11 @@ document.getElementById('confirmar-ingreso-btn').addEventListener('click', () =>
         });
     });
 
-    fetch('/procesar-ingreso/', {
+    fetch('/procesar-ingreso/', {  // Cambiado a procesar-ingreso
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar el token CSRF
+            'X-CSRFToken': getCookie('csrftoken')  // Manejar el token CSRF
         },
         body: JSON.stringify(ingresoData)
     }).then(response => {
