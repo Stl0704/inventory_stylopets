@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Historial de Ingresos</title>
+    <link rel="stylesheet" href="{% static 'css/historialIngresos.css' %}">
+  </head>
+  <body>
+    {% block content %}
+    <div class="container mt-5">
+      <h1>Listado Historial de Ingresos de Productos</h1>
+
+      <!-- Comprobamos si hay elementos en el historial -->
+      {% if historial %}
+        <table class="table table-bordered mt-3">
+          <thead>
+            <tr>
+              <th>ID Ingreso</th>
+              <th>Fecha</th>
+              <th>Responsable</th>
+              <th>Detalles del Ingreso</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ingreso in historial %}
+              <tr>
+                <td>{{ ingreso.Id_Ingreso.id_ingreso }}</td>
+                <td>{{ ingreso.fecha }}</td>
+                <td>{{ ingreso.responsable }}</td>
+                <td>
+                  <ul>
+                    {% for detalle in ingreso.Id_Ingreso.detalles.all %}
+                      <li>Producto: {{ detalle.producto.Nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No hay ingresos registrados en el historial.</p>
+      {% endif %}
+    </div>
+    {% endblock %}
+  </body>
+</html>

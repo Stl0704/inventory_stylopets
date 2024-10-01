@@ -55,27 +55,10 @@ document.getElementById('confirmar-ingreso-btn').addEventListener('click', () =>
 // Cancelar Ingreso
 document.getElementById('cancelar-ingreso-btn').addEventListener('click', () => {
     if (confirm('¿Estás seguro de cancelar el ingreso?')) {
-        // Hacemos una solicitud para vaciar la lista de productos en el servidor
-        fetch('/inventory/cancelar-ingreso/', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')  // Obtener el token CSRF
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redirigir al usuario al panel
-                window.location.href = '/inventory/panel';
-            } else {
-                alert('Error al cancelar el ingreso.');
-            }
-        })
-        .catch(error => {
-            console.error('Error al procesar la cancelación del ingreso:', error);
-            alert('Error en la solicitud para cancelar el ingreso.');
-        });
+        window.location.href = '/panel/';
     }
 });
+
 
 // Obtener el token CSRF
 function getCookie(name) {
