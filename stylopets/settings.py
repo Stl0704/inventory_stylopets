@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # mysql alternativo
-import pymysql
-pymysql.install_as_MySQLdb()
+# import pymysql
+# pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,20 +81,30 @@ WSGI_APPLICATION = 'stylopets.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# # # DATABASES = {
+# # #     'default': {
+# # #         'ENGINE': 'django.db.backends.mysql',
+# # #         'NAME': 'stylopets_local_inventory',
+# # #         'USER': 'root',
+# # #         'PASSWORD': 'root',
+# # #         'HOST': 'localhost',
+# # #         'PORT': '3306',
+# # #         'OPTIONS': {
+# # #             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+# # #         }
+# # #     }
+# # # }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'stylopets_local_inventory',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'NAME': os.environ.get('DJANGO_DB_NAME', 'django_db'),
+        'USER': os.environ.get('DJANGO_DB_USER', 'django_user'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'db'),
         'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

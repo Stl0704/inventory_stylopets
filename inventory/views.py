@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
-from pyzbar.pyzbar import decode
 from PIL import Image
 from .models import ProductoTests, IngresoTest, DetalleIngresoTest, HistorialIngresosTests
 import json
