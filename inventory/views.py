@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from pyzbar.pyzbar import decode
 from PIL import Image
 from .models import ProductoTests, IngresoTest, DetalleIngresoTest, HistorialIngresosTests
@@ -234,3 +234,30 @@ def buscar_producto(request):
                 error = 'Producto no encontrado.'
     
     return render(request, 'registrarIngreso.html', {'productos_añadidos': productos_añadidos, 'error': error})
+
+def listar_guiasDespacho(request):
+    ingresos = HistorialIngresosTests.objects.all()
+    return render(request, 'listado_GuiaDespacho.html', {'ingresos': ingresos})
+from django.shortcuts import render, get_object_or_404
+from .models import IngresoTest, DetalleIngresoTest
+
+
+# Vista para mostrar el detalle de un ingreso específico
+def ver_GuiaDespacho(request, ingreso_id):
+    ingreso = get_object_or_404(IngresoTest, id_ingreso=ingreso_id)
+    detalles = DetalleIngresoTest.objects.filter(ingreso=ingreso)
+    return render(request, 'recibir.html', {'ingreso': ingreso, 'detalles': detalles})
+
+def redirigir_guia_despacho(request):
+    if request.method == "POST":
+        ingreso_id = request.POST.get("ingreso_id")
+        print("Ingreso ID recibido:", ingreso_id)  # Verifica el valor en la consola
+
+        # Verifica si ingreso_id tiene un valor
+        if ingreso_id:
+            return redirect(reverse('ver_GuiaDespacho', args=[ingreso_id]))
+        else:
+            # Retorna una respuesta de error si ingreso_id está vacío
+            return HttpResponseBadRequest("ID de ingreso no proporcionado.")
+    else:
+        return redirect('listado_GuiaDespacho')

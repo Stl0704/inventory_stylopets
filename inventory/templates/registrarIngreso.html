@@ -16,7 +16,7 @@
       <div class="main-grid">
         <!-- Columna izquierda -->
         <div class="left-section">
-          <h1>Registrar Ingreso de Producto</h1>
+          <h1>Generar Guia de Despacho</h1>
 
           <!-- Opción de usar la cámara -->
           <div class="camera-scan">
@@ -53,7 +53,7 @@
 
         <!-- Columna derecha -->
         <div class="right-section">
-          <h2>Productos añadidos al ingreso:</h2>
+          <h2>Productos registrados:</h2>
           <form method="POST" action="{% url 'confirmar_ingreso' %}">
             {% csrf_token %}
             <ul id="productos-list">

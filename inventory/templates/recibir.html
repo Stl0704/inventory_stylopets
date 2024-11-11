@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Guia de Despacho #{{ ingreso.id_ingreso }}</title>
+    <link rel="stylesheet" href="{% static 'css/recibirGuiasDespacho.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle de Guia de Despacho #{{ ingreso.id_ingreso }}</h1>
+        <p><strong>Responsable:</strong> {{ ingreso.responsable }}</p>
+        <p><strong>Fecha:</strong> {{ ingreso.fecha }}</p>
+        
+        <h2>Productos en la Guía</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>SKU</th>
+                    <th>Cantidad</th>
+                    <th>Sí</th>
+                    <th>No</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                    <tr>
+                        <td>{{ detalle.producto.Nombre }}</td>
+                        <td>{{ detalle.producto.SKU }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>
+                            <input type="checkbox" name="si_{{ forloop.counter }}" value="si">
+                        </td>
+                        <td>
+                            <input type="checkbox" name="no_{{ forloop.counter }}" value="no">
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No hay productos registrados en este ingreso.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botones de acción -->
+        <div class="button-container">
+            <button class="button">Cancelar</button>
+            <button class="button cancel">Notificar</button>
+            <button class="button notify">Confirmar Guia</button>
+        </div>
+    </div>
+</body>
+</html>

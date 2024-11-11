@@ -23,9 +23,11 @@
       <div class="container">
         <div class="panel-grid">
           <div class="panel-card">
-            <a href="{% url 'procesar_ingreso' %}" class="panel-card">Registrar Ingreso</a>
+            <a href="{% url 'procesar_ingreso' %}" class="panel-card">Generar Guia de Despacho</a>
           </div>
-          <div class="panel-card">Crear Producto</div>
+          <div class="panel-card">
+            <a href="{% url 'listado_GuiaDespacho' %}" class="panel-card">Recibir Guia de Despacho</a>
+          </div>
           <div class="panel-card">
             <a href="{% url 'historial_ingresos' %}" class="panel-card">Historial Ingresos</a>
           </div>
