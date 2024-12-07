@@ -26,7 +26,7 @@ def inicio_sesion(request):
         if form.is_valid():
             usuario = form.get_user()
             login(request, usuario)
-            return redirect('lobby')
+            return redirect('panel')
     else:
         form = InicioSesionForm()
     return render(request, 'inicio_sesion.html', {'form': form})
@@ -39,7 +39,7 @@ class RecuperacionPasswordView(auth_views.PasswordResetView):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect('inicio_sesion')
+    return redirect('index')
 
 def index(request):
     return render(request, 'index.html')

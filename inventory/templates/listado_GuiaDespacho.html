@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Ingresos</title>
+    <link rel="stylesheet" href="{% static 'css/listado_GuiasDespacho.css' %}">
+</head>
+<body>
+    <h1>Guias de Despacho</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Responsable</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingreso in ingresos %}
+                <tr>
+                    <td>{{ ingreso.Id_Ingreso.id_ingreso }}</td>
+                    <td>{{ ingreso.responsable }}</td>
+                    <td>{{ ingreso.fecha }}</td>
+                    <td>
+                        <!-- Botón "Recibir" que envía un formulario con el ID del ingreso -->
+                        <form action="{% url 'redirigir_guia_despacho' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="ingreso_id" value="{{ ingreso.Id_Ingreso.id_ingreso }}">
+                            <button type="submit">Recibir</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hay ingresos registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'panel' %}">Volver al Panel</a>
+</body>
+</html>

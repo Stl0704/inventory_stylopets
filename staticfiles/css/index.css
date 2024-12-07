@@ -1,0 +1,74 @@
+body{
+    background-image: url('https://media.0221.com.ar/p/af24425453109a688df3ba624cf8ae83/adjuntos/357/imagenes/100/024/0100024057/1400x0/smart/perro.jpg'); /* Link a la imagen */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* El contenido ocupa al menos la altura completa de la ventana */
+}
+
+/* General styling */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+  
+.navbar {
+    background-color: #f8f9fa;
+    padding: 1vh 5vw;
+}
+  
+  /* Flexbox to align logo and title */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+  
+.logo-img {
+    height: auto;
+    max-height: 2.5rem;
+}
+  
+.title {
+    font-size: 1.5rem;
+}
+  
+.btn-outline-primary,
+.btn-outline-success {
+    padding: 1vh 2vw;
+    font-size: 1.5vh;
+}
+  
+  /* FOOTER */
+#footer {
+    background-color: #343a40;
+    color: white;
+    padding: 2vh 0;
+}
+  
+.footer-text h3,
+.footer-text p {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.social-icon {
+    width: 2.5rem;
+    height: auto;
+}
+  
+.social {
+    display: flex;
+    justify-content: flex-end;
+}
+  
+.social a {
+    margin-left: 1rem;
+}

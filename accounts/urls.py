@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('registro/', views.registro, name='registro'),
     path('login/', views.inicio_sesion, name='inicio_sesion'),
-    path('logout/', auth_views.LogoutView.as_view(), name='cerrar_sesion'),
+    path('logout/', views.cerrar_sesion, name='cerrar_sesion'),
     path('index/', views.index, name='index'),
     path('password_reset/', views.RecuperacionPasswordView.as_view(),name='password_reset'),
     # Agrega las rutas para confirmación y finalización del password reset

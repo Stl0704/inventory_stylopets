@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registrar Ingreso</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ingresos.css' %}">
+  </head>
+  <body>
+    {% include 'banner.html' %}
+    {% block content %}
+    <div class="container">
+      <!-- Dividimos la pantalla en dos columnas -->
+      <div class="main-grid">
+        <!-- Columna izquierda -->
+        <div class="left-section">
+          <h1>Registrar Ingreso de Producto</h1>
+
+          <!-- Opción de usar la cámara -->
+          <div class="camera-scan">
+            <h3>Escanear con la cámara</h3>
+            <video id="camera-stream" width="300" height="300" autoplay></video>
+            <button id="capture-btn" class="btn btn-primary">Escanear</button>
+            <button id="stop-camera-btn" class="btn btn-danger">Cerrar Escáner</button>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+          </div>
+
+          <hr>
+
+          <!-- Opción de subir una imagen -->
+          <div class="upload-scan">
+            <h3>Subir Imagen de Código QR o de Barras</h3>
+            <form id="escanear-form" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="image" accept="image/*" class="form-control mb-2">
+              <button type="submit" class="btn btn-success">Subir y Escanear</button>
+            </form>       
+          </div>
+
+          <hr>
+
+          <!-- Opción de buscar manualmente por SKU o ID -->
+          <div class="manual-search">
+            <h3>Buscar mediante SKU o ID</h3>
+            <form id="search-form" method="POST" action="{% url 'buscar_producto' %}">
+              <input type="text" name="sku_id" id="sku-id" placeholder="Ingresar SKU o ID" class="form-control mb-2">
+              <button type="submit" id="buscar-producto-btn" class="btn btn-info">Buscar Producto</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="right-section">
+          <h2>Productos añadidos al ingreso:</h2>
+          <form method="POST" action="{% url 'confirmar_ingreso' %}">
+            {% csrf_token %}
+            <ul id="productos-list">
+                <!-- Aquí se insertarán los productos dinámicamente -->
+                {% for producto in productos_añadidos %}
+                    <li id="producto-{{ producto.Id_Producto }}">
+                        <p><strong>Id Producto:</strong> {{ producto.Id_Producto }}</p>
+                        <p><strong>Nombre:</strong> {{ producto.Nombre }}</p>
+                        <p><strong>Categoría:</strong> {{ producto.Categoria }}</p>
+                        <!-- Este input envía la cantidad al servidor -->
+                        <p><strong>Cantidad:</strong><input type="number" name="cantidad_{{ producto.SKU }}" placeholder="Cantidad de Stock Entrante" value="1" class="form-control mb-2"></p>
+                        <button type="button" class="btn btn-danger eliminar-btn" data-producto-id="{{ producto.Id_Producto }}">Eliminar</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        
+            <div class="ingreso-actions">
+                <!-- Este botón enviará el formulario con los datos de productos -->
+                <button type="submit" class="btn btn-success" id="confirmar-ingreso-btn">Confirmar Ingreso</button>
+                <button type="button" id="cancelar-ingreso-btn" class="btn btn-danger">Cancelar</button>
+            </div>
+        </form>
+        </div>
+
+      </div>
+    </div>
+    {% endblock %}
+    
+    {% include 'footer.html' %}
+
+    <script src="{% static 'js/ingresoProducto.js' %}"></script>
+    <script src="{% static 'js/escanearCamara.js' %}"></script>
+    
+  </body>
+</html>
