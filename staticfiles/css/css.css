@@ -1,0 +1,40 @@
+/* Estilos para los inputs */
+.login-box .user-box{
+    width: 30%;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.login-box .pass-box{
+    width: 30%;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.user-box input:focus~label,
+.user-box input:valid~label {
+    top: -20px;
+    font-size: 12px;
+    color: #f48003;
+}
+
+/* Estilos para el botón */
+.btn {
+    background: none;
+    border: none;
+    color: #f48003;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+.btn:hover {
+    color: #fff;
+}
+
+.container-center{
+    align-items: center;
+    
+}

@@ -1,0 +1,228 @@
+/* recibir.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #5a5a5a;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 16px;
+    color: #5a5a5a;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+}
+
+.table thead {
+    background-color: #0056b3;
+    color: white;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table th {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-container label {
+    font-weight: bold;
+    color: #333;
+}
+
+.checkbox-container input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {/* recibir.css */
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        margin: 0;
+    }
+    
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 900px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    h1 {
+        color: #5a5a5a;
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: bold;
+    }
+    
+    p {
+        font-size: 18px;
+        color: #5a5a5a;
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #ffffff;
+        font-size: 18px;
+    }
+    
+    .table thead {
+        background-color: #0056b3;
+        color: white;
+    }
+    
+    .table th,
+    .table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    
+    .table th {
+        background-color: #0056b3;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    .checkbox-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .checkbox-container label {
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+        transform: scale(1.2);
+    }
+    
+    .button-container {
+        text-align: center;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .button {
+        padding: 12px 25px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .button.cancel {
+        background-color: #f44336;
+    }
+    
+    .button.cancel:hover {
+        background-color: #c62828;
+    }
+    
+    .button.notify {
+        background-color: #ffa500;
+    }
+    
+    .button.notify:hover {
+        background-color: #ff8c00;
+    }
+    
+    .button.confirm {
+        background-color: #4CAF50;
+    }
+    
+    .button.confirm:hover {
+        background-color: #388E3C;
+    }
+    
+    background-color: #004080;
+}

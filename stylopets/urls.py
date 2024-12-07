@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from inventory.views import *
 from accounts.views import *
+from dashboard.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('inventory/', include('inventory.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]

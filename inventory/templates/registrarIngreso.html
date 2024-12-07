@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="{% static 'css/ingresos.css' %}">
   </head>
   <body>
+    {% include 'banner.html' %}
     {% block content %}
     <div class="container">
       <!-- Dividimos la pantalla en dos columnas -->
       <div class="main-grid">
         <!-- Columna izquierda -->
         <div class="left-section">
-          <h1>Generar Guia de Despacho</h1>
+          <h1>Registrar Ingreso de Producto</h1>
 
           <!-- Opción de usar la cámara -->
           <div class="camera-scan">
@@ -32,11 +33,11 @@
           <!-- Opción de subir una imagen -->
           <div class="upload-scan">
             <h3>Subir Imagen de Código QR o de Barras</h3>
-            <form method="POST" enctype="multipart/form-data" action="{% url 'escanear_codigo' %}">
+            <form id="escanear-form" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <input type="file" name="image" accept="image/*" class="form-control mb-2">
               <button type="submit" class="btn btn-success">Subir y Escanear</button>
-            </form>
+            </form>       
           </div>
 
           <hr>
@@ -53,7 +54,7 @@
 
         <!-- Columna derecha -->
         <div class="right-section">
-          <h2>Productos registrados:</h2>
+          <h2>Productos añadidos al ingreso:</h2>
           <form method="POST" action="{% url 'confirmar_ingreso' %}">
             {% csrf_token %}
             <ul id="productos-list">
@@ -64,7 +65,7 @@
                         <p><strong>Nombre:</strong> {{ producto.Nombre }}</p>
                         <p><strong>Categoría:</strong> {{ producto.Categoria }}</p>
                         <!-- Este input envía la cantidad al servidor -->
-                        <input type="number" name="cantidad_{{ producto.SKU }}" placeholder="Cantidad de Stock Entrante" value="1" class="form-control mb-2">
+                        <p><strong>Cantidad:</strong><input type="number" name="cantidad_{{ producto.SKU }}" placeholder="Cantidad de Stock Entrante" value="1" class="form-control mb-2"></p>
                         <button type="button" class="btn btn-danger eliminar-btn" data-producto-id="{{ producto.Id_Producto }}">Eliminar</button>
                     </li>
                 {% endfor %}
@@ -81,6 +82,8 @@
       </div>
     </div>
     {% endblock %}
+    
+    {% include 'footer.html' %}
 
     <script src="{% static 'js/ingresoProducto.js' %}"></script>
     <script src="{% static 'js/escanearCamara.js' %}"></script>

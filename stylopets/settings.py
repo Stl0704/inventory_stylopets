@@ -44,6 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory',
     'accounts',
+    'dashboard',
+    # DASH - DJANGO EXTENSION
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    # DASH COMUNICATION
+    'channels',
+    # DASH STYLES
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # DASH MIDDLEWARE
+    'django_plotly_dash.middleware.BaseMiddleware',
+    'django_plotly_dash.middleware.ExternalRedirectionMiddleware',
 ]
 
 ROOT_URLCONF = 'stylopets.urls'
@@ -74,6 +84,13 @@ TEMPLATES = [
     },
 ]
 
+# DASH ASGI SETTINGS:
+
+ASGI_APPLICATION = 'stylopets.asgi.application'
+
+
+# NATIVE WSGI SETTINGS:
+
 WSGI_APPLICATION = 'stylopets.wsgi.application'
 
 
@@ -84,8 +101,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'stylopets_local_inventory',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -139,6 +156,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'accounts', 'static'),
     os.path.join(BASE_DIR, 'inventory', 'static'),
+    os.path.join(BASE_DIR, 'dashboard', 'static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
