@@ -6,8 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Registrar Ingreso</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest"></script>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'css/ingresos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Ingresos.css' %}">
   </head>
   <body>
     {% include 'banner.html' %}
@@ -20,13 +22,60 @@
           <h1>Registrar Ingreso de Producto</h1>
 
           <!-- Opción de usar la cámara -->
-          <div class="camera-scan">
+          {% comment %} <div class="camera-scan">
             <h3>Escanear con la cámara</h3>
             <video id="camera-stream" width="300" height="300" autoplay></video>
             <button id="capture-btn" class="btn btn-primary">Escanear</button>
             <button id="stop-camera-btn" class="btn btn-danger">Cerrar Escáner</button>
             <canvas id="camera-canvas" style="display:none;"></canvas>
+          </div> {% endcomment %}
+
+            <div class="camera-scan text-center">
+              <h3>Escanear con la cámara</h3>
+              <div class="video-container" style="position: relative; display: inline-block;">
+                  <video id="camera-stream" width="400" height="400" autoplay></video>
+                  <!-- Guía de posicionamiento -->
+                  <div class="qr-guide" style="
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      width: 200px;
+                      height: 200px;
+                      margin-left: -100px;
+                      margin-top: -100px;
+                      border: 2px dashed #00FF00;
+                      pointer-events: none;">
+                  </div>
+              </div>
+              <div class="mt-3">
+                  <button id="capture-btn" class="btn btn-primary">Escanear</button>
+                  <button id="obtener-btn" class="btn btn-success"  type="submit" style="display:none;">Obtener</button>
+                  <button id="stop-camera-btn" class="btn btn-danger">Cerrar Escáner</button>
+              </div>
+              <canvas id="camera-canvas" style="display:none;"></canvas>
+              
+              <!-- Imagen Capturada para Depuración -->
+              <div id="captured-image-container" style="margin-top: 20px;">
+                <h4>Imagen Capturada:</h4>
+                <img id="captured-image" src="" alt="Imagen Capturada" style="max-width: 300px; display: none;">
+              </div>
           </div>
+
+          {% comment %} <div class="camera-scan">
+            <h3>Escanear con la cámara</h3>
+            <video id="camera-stream" width="400" height="400" autoplay></video>
+            <div class="mt-3">
+                <button id="capture-btn" class="btn btn-primary">Escanear</button>
+                <button id="obtener-btn" class="btn btn-success" style="display:none;">Obtener</button>
+                <button id="stop-camera-btn" class="btn btn-danger">Cerrar Escáner</button>
+            </div>
+            <canvas id="camera-canvas" width="400" height="400" style="display:none;"></canvas>
+
+            <div id="captured-image-container" style="margin-top: 20px;">
+              <h4>Imagen Capturada:</h4>
+              <img id="captured-image" src="" alt="Imagen Capturada" style="max-width: 300px; display: none;">
+            </div>
+          </div> {% endcomment %}
 
           <hr>
 
@@ -87,6 +136,6 @@
 
     <script src="{% static 'js/ingresoProducto.js' %}"></script>
     <script src="{% static 'js/escanearCamara.js' %}"></script>
-    
+
   </body>
 </html>

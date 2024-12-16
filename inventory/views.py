@@ -50,8 +50,6 @@ def procesar_codigo_imagen(image_file):
         print(f"Error al procesar la imagen: {str(e)}")
         return render(request, 'registrarIngreso.html', {'productos_añadidos': productos_añadidos})
 
-# Nueva vista para procesar el escaneo de la imagen (QR/Código de barras)
-
 
 @csrf_exempt
 def escanear_codigo(request):
@@ -101,6 +99,48 @@ def escanear_codigo(request):
 
     return render(request, 'registrarIngreso.html', {'productos_añadidos': productos_añadidos})
 
+@csrf_exempt
+def obtenerScan(request, codigo):
+    if request.method == 'GET':
+        try:
+            codigo = codigo.strip()
+            print(f"Recibido código: '{codigo}'")
+
+            # Validar el formato del código (ejemplo: alfanumérico de 4 a 5 caracteres)
+            if not re.match(r'^[A-Z0-9]{4,5}$', codigo):
+                print("Formato de código inválido.")
+                return JsonResponse({'error': 'Formato de código inválido.'}, status=400)
+
+            if codigo:
+                # Buscar el producto por SKU o ID_Producto
+                producto = (ProductoTests.objects.filter(SKU=codigo).first() or
+                           ProductoTests.objects.filter(Id_Producto=codigo).first())
+
+                if producto:
+                    print(f"Producto encontrado: {producto.Nombre}")
+                    return JsonResponse({
+                        'producto': {
+                            'Id_Producto': producto.Id_Producto,
+                            'SKU': producto.SKU,
+                            'Nombre': producto.Nombre,
+                            'Categoria': producto.Categoria,
+                            'Stock': producto.Stock
+                        },
+                        'mensaje': 'Producto encontrado correctamente.'
+                    })
+                else:
+                    print("Producto no encontrado.")
+                    return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
+            else:
+                print("No se proporcionó ningún código.")
+                return JsonResponse({'error': 'No se proporcionó ningún código.'}, status=400)
+
+        except Exception as e:
+            print(f"Error al procesar la solicitud: {e}")
+            return JsonResponse({'error': 'Error al procesar la solicitud.'}, status=500)
+    else:
+        print("Método no permitido.")
+        return JsonResponse({'error': 'Método no permitido.'}, status=405)
 
 # Vista para procesar el registro de ingreso
 def procesar_ingreso(request):
